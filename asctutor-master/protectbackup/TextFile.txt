@@ -1,0 +1,37 @@
+﻿
+
+Table ideas
+
+Table for WID, CHECKING FIRST
+
+UserName
+WID
+passwordChanges		start at 0
+availChanges         start at 0
+???
+
+
+Table for DROPS recording
+
+UserName
+DateDropped
+CourseDropped
+TutorName
+????
+
+
+Report
+Last Name
+First Name
+Email
+Winthrop ID
+Class
+Tutor
+Dropped Date
+
+
+
+
+Update editavailablity to increase counter
+update course selection to increase counter
+well course selection counter seems useless now i should have just checked something else but i guess its fine for both.

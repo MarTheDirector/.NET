@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--#include file="../includes/header.asp"-->
+<title>
+ASC Tutor Scheduling Website
+</title>
+</head>
+<body>
+<!--#include file="../includes/navbar-tutor.asp"-->
+
+<div class="container">
+<div class="well">
+	<p style="text-align:center;" class="lead">Below is a list of all tutees you tutor.	<br />
+	</p>
+</div>
+<form name="" action="drop-or-add-tutees.asp" method="post" >
+<%
+EstablishDBCON rstutorinfo,conforinfo
+EstablishDBCON rstutorcourses4,conforinfo4
+
+'*********************************
+'tutor name will be changed otherwise we get admin
+TutorName = Request.Cookies("user")("username")
+
+sqlString = "exec dbo.ActiveTutorTutees @UserName ='"&TutorName&"'"
+'Response.write sqlString
+rstutorinfo.open sqlString
+
+if rstutorinfo.eof = false then
+		Response.write("<table class='table table-bordered'>")
+		Response.write("<tr>")
+		Response.write("<th colspan=9 style='text-align:center;'>Tutees being tutored</th>")
+		Response.write("</tr>")
+		Response.write("<tr>")
+		Response.write("<td>ID</td>")
+		Response.write("<td>Day</td>")
+		Response.write("<td>Start Time</td>")
+		Response.write("<td>Stop Time</td>")
+		Response.write("<td>Tutee 1</td>")
+		Response.write("<td>Tutee 2</td>")
+		Response.write("<td>Course</td>")
+		Response.write("<td>Allows Two?</td>")
+		Response.write("</tr>")
+
+        do until rstutorinfo.eof 
+                UserName= rstutorinfo("UserName")
+                Days = rstutorinfo("Day")
+                StartTime=rstutorinfo("Start Time")
+                StopTime=rstutorinfo("Stop Time")
+                Status = rstutorinfo("Status")
+                Tutee1= rstutorinfo("Tutee 1")
+                Tutee2= rstutorinfo("Tutee 2")
+                Selected = rstutorinfo("Tutor Selected")
+                Allows2 = rstutorinfo("Allow Two?")
+                Course = rstutorinfo("Course")
+                ID = rstutorinfo("ID")
+                DisplayThisTime = StartTime & "-" & StopTime
+
+                Response.write("<tr>")
+
+                Response.write("<td>")
+                Response.write(ID)
+                Response.write("</td>")
+
+                 Response.write("<td>")
+                Response.write(Days)
+                Response.write("</td>")
+
+                 Response.write("<td>")
+                Response.write(StartTime)
+                Response.write("</td>")
+
+                 Response.write("<td>")
+                Response.write(StopTime)
+                Response.write("</td>")
+
+                 Response.write("<td>")
+                 Response.write ("<a href='view-basic-info.asp?q="&Tutee1&"'>")
+                Response.write(getRealName (Tutee1))
+                 Response.write ("</a>")
+                Response.write("</td>")
+
+                 Response.write("<td>")
+                 Response.write ("<a href='view-basic-info.asp?q="&Tutee2&"'>")
+                Response.write(getRealName (Tutee2))
+                Response.write ("</a>")
+                Response.write("</td>")
+
+                Response.write("<td>")
+                Response.write(getCourseTitle(Course))
+                Response.write("</td>")
+
+                Response.write("<td>")
+                Response.write(Allows2)
+                Response.write("</td>")
+
+                Response.write("</tr>")
+
+                rstutorinfo.movenext
+         loop
+
+		Response.write("</table>")
+		'Response.write("<button type='submit'value ="&ID&"class='btn btn-primary'>Submit</button>")
+else
+    	Response.Write("You are not currently tutoring any tutees.")
+
+end if
+%>
+
+<a href="default.asp" class="btn btn-inverse">Back</a>
+</form>
+  <footer>
+        <!--#include file="../includes/footer.asp"-->
+      </footer>
+</div>
+</body>
+</html>

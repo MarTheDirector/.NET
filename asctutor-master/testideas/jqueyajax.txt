@@ -1,0 +1,12 @@
+﻿    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+</script>
+<script>
+    $(document).ready(function () {
+        $("button").click(function () {
+            $.get("demo_test.asp", function (data, status) {
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+        });
+    });
+</script>
+<button>Send an HTTP GET request to a page and get the result back</button>
